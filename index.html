@@ -402,4 +402,381 @@
       { name: "Волгоград", budget: 46, pop: 1000 },
       { name: "Саратов", budget: 38, pop: 820 },
       { name: "Тюмень", budget: 48, pop: 850 },
-      { name: 
+      { name: "Тольятти", budget: 22, pop: 680 },
+      { name: "Ижевск", budget: 28, pop: 640 },
+      { name: "Барнаул", budget: 27, pop: 630 },
+      { name: "Ульяновск", budget: 24, pop: 620 },
+      { name: "Иркутск", budget: 32, pop: 620 },
+      { name: "Хабаровск", budget: 35, pop: 610 },
+      { name: "Ярославль", budget: 26, pop: 600 },
+      { name: "Владивосток", budget: 34, pop: 600 },
+      { name: "Махачкала", budget: 18, pop: 600 },
+      { name: "Томск", budget: 25, pop: 570 },
+      { name: "Оренбург", budget: 23, pop: 560 },
+      { name: "Кемерово", budget: 26, pop: 550 },
+      { name: "Новокузнецк", budget: 24, pop: 540 },
+      { name: "Рязань", budget: 22, pop: 530 },
+      { name: "Астрахань", budget: 20, pop: 520 },
+      { name: "Пенза", budget: 19, pop: 510 },
+      { name: "Липецк", budget: 21, pop: 500 },
+      { name: "Киров", budget: 18, pop: 490 },
+      { name: "Чебоксары", budget: 17, pop: 490 },
+      { name: "Калининград", budget: 28, pop: 490 },
+      { name: "Тула", budget: 23, pop: 470 },
+      { name: "Курск", budget: 18, pop: 440 },
+      { name: "Ставрополь", budget: 20, pop: 450 },
+      { name: "Сочи", budget: 30, pop: 440 },
+      { name: "Тверь", budget: 19, pop: 420 },
+      { name: "Магнитогорск", budget: 17, pop: 410 },
+      { name: "Иваново", budget: 15, pop: 400 },
+      { name: "Брянск", budget: 16, pop: 400 },
+      { name: "Белгород", budget: 22, pop: 390 },
+      { name: "Сургут", budget: 38, pop: 390 },
+      { name: "Владимир", budget: 16, pop: 350 },
+      { name: "Архангельск", budget: 17, pop: 340 },
+      { name: "Калуга", budget: 18, pop: 330 },
+      { name: "Смоленск", budget: 14, pop: 320 },
+      { name: "Саранск", budget: 13, pop: 310 },
+      { name: "Череповец", budget: 16, pop: 310 },
+      { name: "Вологда", budget: 15, pop: 300 },
+      { name: "Орёл", budget: 13, pop: 300 },
+      { name: "Грозный", budget: 15, pop: 320 },
+      { name: "Мурманск", budget: 18, pop: 280 },
+      { name: "Тамбов", budget: 13, pop: 280 },
+      { name: "Кострома", budget: 11, pop: 270 },
+      { name: "Петрозаводск", budget: 12, pop: 270 },
+      { name: "Нижневартовск", budget: 20, pop: 280 },
+      { name: "Йошкар-Ола", budget: 11, pop: 270 },
+      { name: "Новороссийск", budget: 14, pop: 280 },
+      { name: "Таганрог", budget: 11, pop: 250 },
+      { name: "Сыктывкар", budget: 13, pop: 240 },
+      { name: "Нальчик", budget: 10, pop: 240 },
+      { name: "Дзержинск", budget: 10, pop: 230 },
+      { name: "Братск", budget: 11, pop: 220 },
+      { name: "Великий Новгород", budget: 11, pop: 220 },
+      { name: "Псков", budget: 10, pop: 200 },
+      { name: "Бийск", budget: 9, pop: 200 },
+      { name: "Балашиха", budget: 13, pop: 520 },
+      { name: "Химки", budget: 12, pop: 260 },
+      { name: "Королёв", budget: 11, pop: 230 },
+      { name: "Мытищи", budget: 12, pop: 260 },
+      { name: "Люберцы", budget: 10, pop: 210 },
+      { name: "Подольск", budget: 14, pop: 310 },
+      { name: "Одинцово", budget: 11, pop: 180 },
+      { name: "Домодедово", budget: 10, pop: 150 }
+    ];
+
+    var questions = [
+      { q: "1. Что такое теневая экономика?", options: ["Экономика бедных стран", "Часть экономики, скрытая от государства и часто без налогов", "Только криминальный бизнес", "Ночная торговля"], correct: 1 },
+      { q: "2. Почему теневая экономика вредна для города?", options: ["Создаёт слишком много рабочих мест", "В бюджет меньше налогов — меньше денег на школы, больницы, дороги", "Делает товары дороже", "Запрещена только в России"], correct: 1 },
+      { q: "3. Что относится к теневой экономике?", options: ["Работа по трудовому договору", "Покупка с чеком", "Зарплата «в конверте» без уплаты налогов", "Оплата коммуналки"], correct: 2 },
+      { q: "4. Как считается ориентировочный объём теневой экономики в калькуляторе?", options: ["Бюджет делится на процент", "Бюджет умножается на долю (в процентах)", "Берётся средний бюджет всех городов", "Случайное число"], correct: 1 },
+      { q: "5. Что помогает уменьшать теневую экономику?", options: ["Запрет малого бизнеса", "Очень высокие налоги", "Упрощение правил, защита работников, контроль и налоговая культура", "Отмена всех налогов"], correct: 2 }
+    ];
+
+    var themeToggle = document.getElementById("themeToggle");
+    var citySelect = document.getElementById("city");
+    var budgetInput = document.getElementById("budget");
+    var populationInput = document.getElementById("population");
+    var percentSlider = document.getElementById("percent");
+    var percentValue = document.getElementById("percentValue");
+    var resultEl = document.getElementById("result");
+    var resultSub = document.getElementById("resultSub");
+    var scaleStatus = document.getElementById("scaleStatus");
+    var perCapitaBox = document.getElementById("perCapitaBox");
+    var perCapitaEl = document.getElementById("perCapita");
+    var cityA = document.getElementById("cityA");
+    var cityB = document.getElementById("cityB");
+    var percentCmp = document.getElementById("percentCmp");
+    var percentCmpValue = document.getElementById("percentCmpValue");
+    var compareResult = document.getElementById("compareResult");
+    var canvas = document.getElementById("chart");
+    var ctx = canvas ? canvas.getContext("2d") : null;
+    var quizContainer = document.getElementById("quiz");
+    var checkBtn = document.getElementById("checkBtn");
+
+    function getSavedTheme() {
+      try { return localStorage.getItem("theme") || "dark"; } catch (e) { return "dark"; }
+    }
+    function setTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      if (themeToggle) themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+      try { localStorage.setItem("theme", theme); } catch (e) {}
+      drawChart();
+    }
+    setTheme(getSavedTheme());
+    if (themeToggle) {
+      themeToggle.onclick = function () {
+        var cur = document.documentElement.getAttribute("data-theme") || "dark";
+        setTheme(cur === "dark" ? "light" : "dark");
+      };
+    }
+
+    var other = cities.slice(1).sort(function (a, b) { return a.name.localeCompare(b.name, "ru"); });
+    var sorted = [cities[0]].concat(other);
+
+    function fillSelect(sel, withEmpty) {
+      if (withEmpty) {
+        var o0 = document.createElement("option");
+        o0.value = ""; o0.textContent = sel.id === "city" ? "— Выберите город —" : (sel.id === "cityA" ? "— Город A —" : "— Город B —");
+        sel.appendChild(o0);
+      }
+      for (var i = 0; i < sorted.length; i++) {
+        var o = document.createElement("option");
+        o.value = String(i);
+        o.textContent = sorted[i].name;
+        sel.appendChild(o);
+      }
+    }
+    citySelect.innerHTML = "";
+    fillSelect(citySelect, true);
+    fillSelect(cityA, true);
+    fillSelect(cityB, true);
+
+    citySelect.onchange = function () {
+      if (citySelect.value === "") return;
+      var c = sorted[parseInt(citySelect.value, 10)];
+      budgetInput.value = c.budget;
+      populationInput.value = c.pop;
+      calculate();
+    };
+    budgetInput.oninput = calculate;
+    populationInput.oninput = calculate;
+    percentSlider.oninput = function () {
+      percentValue.textContent = percentSlider.value + "%";
+      calculate();
+    };
+
+    function scaleInfo(p) {
+      if (p < 15) return { text: "Умеренный уровень", bg: "rgba(74,222,128,0.2)", color: "var(--success)" };
+      if (p < 30) return { text: "Заметный уровень", bg: "rgba(250,204,21,0.2)", color: "#ca8a04" };
+      if (p < 40) return { text: "Высокий уровень", bg: "rgba(249,115,22,0.2)", color: "var(--accent2)" };
+      return { text: "Очень высокий уровень", bg: "rgba(248,113,113,0.2)", color: "var(--danger)" };
+    }
+
+    function calculate() {
+      var budget = parseFloat(budgetInput.value);
+      var percent = parseFloat(percentSlider.value);
+      var pop = parseFloat(populationInput.value); // тыс.
+
+      if (!budget || budget <= 0) {
+        resultEl.textContent = "—";
+        resultSub.textContent = "Выберите город и долю теневого сектора";
+        scaleStatus.style.display = "none";
+        perCapitaBox.style.display = "none";
+        updateBuy(0);
+        drawChart();
+        return;
+      }
+
+      var shadow = budget * (percent / 100);
+      resultEl.textContent = shadow.toLocaleString("ru-RU", { maximumFractionDigits: 1 }) + " млрд ₽";
+
+      var comparison = "";
+      if (shadow > 100) comparison = "Это как бюджет нескольких крупных городов вместе.";
+      else if (shadow > 20) comparison = "На эти деньги можно построить десятки школ или больниц.";
+      else if (shadow > 5) comparison = "Хватило бы на серьёзное развитие инфраструктуры.";
+      else comparison = "Даже эта сумма могла бы заметно улучшить жизнь в городе.";
+      resultSub.textContent = comparison;
+
+      var sc = scaleInfo(percent);
+      scaleStatus.style.display = "inline-block";
+      scaleStatus.textContent = sc.text;
+      scaleStatus.style.background = sc.bg;
+      scaleStatus.style.color = sc.color;
+
+      if (pop && pop > 0) {
+        // shadow млрд / (pop * 1000) = млн на человека... лучше в рублях
+        var perPerson = (shadow * 1000000000) / (pop * 1000);
+        perCapitaEl.textContent = Math.round(perPerson).toLocaleString("ru-RU") + " ₽ в год";
+        perCapitaBox.style.display = "block";
+      } else {
+        perCapitaBox.style.display = "none";
+      }
+
+      updateBuy(shadow);
+      drawChart();
+    }
+
+    function updateBuy(shadowBillion) {
+      function fmt(n) {
+        if (n <= 0) return "—";
+        if (n >= 1) return Math.floor(n).toLocaleString("ru-RU");
+        return n.toFixed(1);
+      }
+      document.getElementById("buySchools").textContent = fmt(shadowBillion / 1.0);
+      document.getElementById("buyHospitals").textContent = fmt(shadowBillion / 0.4);
+      document.getElementById("buyRoads").textContent = fmt(shadowBillion / 0.08);
+      var buses = shadowBillion / 0.015;
+      document.getElementById("buyBuses").textContent = buses >= 1 ? Math.floor(buses).toLocaleString("ru-RU") : (buses > 0 ? String(Math.round(buses)) : "—");
+    }
+
+    function updateCompare() {
+      var ia = cityA.value === "" ? -1 : parseInt(cityA.value, 10);
+      var ib = cityB.value === "" ? -1 : parseInt(cityB.value, 10);
+      var p = parseFloat(percentCmp.value);
+      percentCmpValue.textContent = p + "%";
+      if (ia < 0 || ib < 0) {
+        compareResult.style.display = "none";
+        return;
+      }
+      var ca = sorted[ia], cb = sorted[ib];
+      var sa = ca.budget * (p / 100);
+      var sb = cb.budget * (p / 100);
+      document.getElementById("cmpNameA").textContent = ca.name;
+      document.getElementById("cmpNameB").textContent = cb.name;
+      document.getElementById("cmpBudgetA").textContent = ca.budget;
+      document.getElementById("cmpBudgetB").textContent = cb.budget;
+      document.getElementById("cmpShadowA").textContent = sa.toLocaleString("ru-RU", { maximumFractionDigits: 1 }) + " млрд ₽";
+      document.getElementById("cmpShadowB").textContent = sb.toLocaleString("ru-RU", { maximumFractionDigits: 1 }) + " млрд ₽";
+      var pa = ca.pop ? Math.round((sa * 1e9) / (ca.pop * 1000)).toLocaleString("ru-RU") + " ₽ на жителя" : "";
+      var pb = cb.pop ? Math.round((sb * 1e9) / (cb.pop * 1000)).toLocaleString("ru-RU") + " ₽ на жителя" : "";
+      document.getElementById("cmpPerA").textContent = pa;
+      document.getElementById("cmpPerB").textContent = pb;
+      compareResult.style.display = "grid";
+    }
+    cityA.onchange = updateCompare;
+    cityB.onchange = updateCompare;
+    percentCmp.oninput = updateCompare;
+
+    function drawChart() {
+      if (!canvas || !ctx) return;
+      var budget = parseFloat(budgetInput.value) || 0;
+      var currentPercent = parseFloat(percentSlider.value);
+      var dpr = window.devicePixelRatio || 1;
+      var rect = canvas.getBoundingClientRect();
+      if (rect.width < 10) return;
+      canvas.width = rect.width * dpr;
+      canvas.height = 220 * dpr;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+      var width = rect.width, height = 220;
+      var pad = { top: 20, right: 16, bottom: 36, left: 50 };
+      var chartW = width - pad.left - pad.right;
+      var chartH = height - pad.top - pad.bottom;
+      var percents = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+      var values = percents.map(function (p) { return budget * (p / 100); });
+      var maxVal = Math.max.apply(null, values.concat([1]));
+      var isDark = document.documentElement.getAttribute("data-theme") !== "light";
+      var gridColor = isDark ? "#334155" : "#cbd5e1";
+      var textColor = isDark ? "#94a3b8" : "#64748b";
+      var lineColor = isDark ? "#38bdf8" : "#0284c7";
+      var fillColor = isDark ? "rgba(56,189,248,0.15)" : "rgba(2,132,199,0.12)";
+      var activeColor = isDark ? "#f97316" : "#ea580c";
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = gridColor; ctx.lineWidth = 1;
+      ctx.font = "12px system-ui,sans-serif"; ctx.fillStyle = textColor; ctx.textAlign = "right";
+      for (var i = 0; i <= 4; i++) {
+        var y = pad.top + (chartH / 4) * i;
+        ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(width - pad.right, y); ctx.stroke();
+        var val = maxVal * (1 - i / 4);
+        ctx.fillText(val >= 10 ? String(Math.round(val)) : val.toFixed(1), pad.left - 6, y + 4);
+      }
+      ctx.textAlign = "center";
+      for (var j = 0; j < percents.length; j++) {
+        var x = pad.left + (chartW / (percents.length - 1)) * j;
+        ctx.fillText(percents[j] + "%", x, height - 10);
+      }
+      if (budget <= 0) {
+        ctx.fillStyle = textColor; ctx.font = "14px system-ui,sans-serif";
+        ctx.fillText("Выберите город, чтобы увидеть график", width / 2, height / 2);
+        return;
+      }
+      ctx.beginPath();
+      for (var k = 0; k < values.length; k++) {
+        var xx = pad.left + (chartW / (percents.length - 1)) * k;
+        var yy = pad.top + chartH - (values[k] / maxVal) * chartH;
+        if (k === 0) ctx.moveTo(xx, yy); else ctx.lineTo(xx, yy);
+      }
+      ctx.lineTo(pad.left + chartW, pad.top + chartH); ctx.lineTo(pad.left, pad.top + chartH);
+      ctx.closePath(); ctx.fillStyle = fillColor; ctx.fill();
+      ctx.beginPath();
+      for (var m = 0; m < values.length; m++) {
+        var x2 = pad.left + (chartW / (percents.length - 1)) * m;
+        var y2 = pad.top + chartH - (values[m] / maxVal) * chartH;
+        if (m === 0) ctx.moveTo(x2, y2); else ctx.lineTo(x2, y2);
+      }
+      ctx.strokeStyle = lineColor; ctx.lineWidth = 2.5; ctx.stroke();
+      for (var n = 0; n < values.length; n++) {
+        var x3 = pad.left + (chartW / (percents.length - 1)) * n;
+        var y3 = pad.top + chartH - (values[n] / maxVal) * chartH;
+        var isActive = percents[n] === currentPercent;
+        ctx.beginPath(); ctx.arc(x3, y3, isActive ? 6 : 4, 0, Math.PI * 2);
+        ctx.fillStyle = isActive ? activeColor : lineColor; ctx.fill();
+      }
+    }
+    window.addEventListener("resize", drawChart);
+    drawChart();
+
+    for (var qi = 0; qi < questions.length; qi++) {
+      (function (item, qIndex) {
+        var div = document.createElement("div");
+        div.className = "question";
+        var h3 = document.createElement("h3");
+        h3.textContent = item.q;
+        div.appendChild(h3);
+        var optionsDiv = document.createElement("div");
+        optionsDiv.className = "options";
+        optionsDiv.id = "q" + qIndex;
+        for (var oi = 0; oi < item.options.length; oi++) {
+          (function (opt, oIndex) {
+            var label = document.createElement("label");
+            label.className = "option";
+            var input = document.createElement("input");
+            input.type = "radio"; input.name = "q" + qIndex; input.value = String(oIndex);
+            var span = document.createElement("span");
+            span.textContent = opt;
+            label.appendChild(input); label.appendChild(span);
+            label.onclick = function () {
+              var all = optionsDiv.querySelectorAll(".option");
+              for (var t = 0; t < all.length; t++) all[t].classList.remove("selected");
+              label.classList.add("selected");
+            };
+            optionsDiv.appendChild(label);
+          })(item.options[oi], oi);
+        }
+        div.appendChild(optionsDiv);
+        quizContainer.appendChild(div);
+      })(questions[qi], qi);
+    }
+
+    checkBtn.onclick = function () {
+      var score = 0, answered = 0;
+      for (var qIndex = 0; qIndex < questions.length; qIndex++) {
+        var item = questions[qIndex];
+        var selected = document.querySelector('input[name="q' + qIndex + '"]:checked');
+        var options = document.querySelectorAll("#q" + qIndex + " .option");
+        for (var i = 0; i < options.length; i++) options[i].classList.remove("correct", "wrong");
+        if (selected) {
+          answered++;
+          var selectedIndex = parseInt(selected.value, 10);
+          if (selectedIndex === item.correct) { score++; options[selectedIndex].classList.add("correct"); }
+          else { options[selectedIndex].classList.add("wrong"); options[item.correct].classList.add("correct"); }
+        }
+      }
+      var resultBox = document.getElementById("quiz-result");
+      resultBox.style.display = "block";
+      if (answered < questions.length) {
+        resultBox.style.background = "rgba(249,115,22,0.12)";
+        resultBox.style.color = "var(--accent2)";
+        resultBox.textContent = "Ответь на все вопросы! Сейчас: " + answered + " из " + questions.length;
+        return;
+      }
+      if (score === 5) {
+        resultBox.style.background = "rgba(74,222,128,0.12)";
+        resultBox.style.color = "var(--success)";
+        resultBox.textContent = "Отлично! " + score + " из 5.";
+      } else if (score >= 3) {
+        resultBox.style.background = "rgba(56,189,248,0.12)";
+        resultBox.style.color = "var(--accent)";
+        resultBox.textContent = "Хорошо! " + score + " из 5.";
+      } else {
+        resultBox.style.background = "rgba(248,113,113,0.12)";
+        resultBox.style.color = "var(--danger)";
+        resultBox.textContent = score + " из 5. Перечитай теорию и попробуй ещё раз.";
+      }
+    };
+  })();
+  </script>
+</body>
+</html>
