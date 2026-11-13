@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Теневая экономика России — калькулятор для школьного проекта</title>
+  <style>
+    :root, [data-theme="dark"] {
+      --bg: #0f172a; --card: #1e293b; --accent: #38bdf8; --accent2: #f97316;
+      --text: #e2e8f0; --muted: #94a3b8; --success: #4ade80; --danger: #f87171;
+      --border: #334155; --input-bg: #0f172a;
+    }
+    [data-theme="light"] {
+      --bg: #f1f5f9; --card: #ffffff; --accent: #0284c7; --accent2: #ea580c;
+      --text: #0f172a; --muted: #64748b; --success: #16a34a; --danger: #dc2626;
+      --border: #e2e8f0; --input-bg: #f8fafc;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.6;
+      min-height: 100vh; transition: background 0.3s, color 0.3s;
+    }
+    .container { max-width: 920px; margin: 0 auto; padding: 40px 20px; }
+    header { text-align: center; margin-bottom: 40px; position: relative; }
+    header h1 {
+      font-size: 2.4rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), #818cf8);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px;
+    }
+    header p { color: var(--muted); font-size: 1.1rem; }
+    .theme-toggle {
+      position: absolute; top: 0; right: 0; background: var(--card);
+      border: 1px solid var(--border); color: var(--text); width: 44px; height: 44px;
+      border-radius: 12px; cursor: pointer; font-size: 1.3rem;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .theme-toggle:hover { border-color: var(--accent); transform: scale(1.05); }
+    section {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 32px; margin-bottom: 28px; box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    h2 {
+      font-size: 1.45rem; margin-bottom: 20px; color: var(--accent);
+      display: flex; align-items: center; gap: 10px;
+    }
+    h2::before {
+      content: ''; display: inline-block; width: 6px; height: 24px;
+      background: var(--accent); border-radius: 3px;
+    }
+    p, li { color: var(--text); margin-bottom: 12px; }
+    ul { padding-left: 22px; margin-bottom: 16px; }
+    .highlight {
+      background: rgba(56, 189, 248, 0.1); border-left: 4px solid var(--accent);
+      padding: 16px 20px; border-radius: 0 10px 10px 0; margin: 20px 0;
+    }
+    .warning {
+      background: rgba(249, 115, 22, 0.1); border-left: 4px solid var(--accent2);
+      padding: 16px 20px; border-radius: 0 10px 10px 0; margin: 20px 0;
+    }
+    .calc-grid { display: grid; gap: 22px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    label { font-weight: 600; color: var(--muted); font-size: 0.95rem; }
+    select, input[type="number"] {
+      background: var(--input-bg); border: 1px solid var(--border); color: var(--text);
+      padding: 14px 16px; border-radius: 10px; font-size: 1rem; outline: none;
+    }
+    select:focus, input[type="number"]:focus { border-color: var(--accent); }
+    .slider-container { display: flex; align-items: center; gap: 16px; }
+    input[type="range"] {
+      flex: 1; height: 8px; -webkit-appearance: none; background: var(--border);
+      border-radius: 4px; outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 22px; height: 22px; background: var(--accent);
+      border-radius: 50%; cursor: pointer;
+    }
+    .percent-value {
+      font-size: 1.4rem; font-weight: 700; color: var(--accent);
+      min-width: 70px; text-align: right;
+    }
+    .result-box {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+      border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 14px;
+      padding: 26px; text-align: center;
+    }
+    .result-box .label { color: var(--muted); font-size: 0.95rem; margin-bottom: 8px; }
+    .result-box .value { font-size: 2.1rem; font-weight: 700; color: var(--accent); }
+    .result-box .sub { margin-top: 10px; color: var(--muted); font-size: 0.95rem; }
+    .chart-wrap { margin-top: 28px; }
+    .chart-wrap h3 { font-size: 1.05rem; margin-bottom: 14px; color: var(--muted); }
+    canvas { width: 100% !important; max-height: 260px; border-radius: 10px; }
+    .buy-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px; margin-top: 18px;
+    }
+    .buy-card {
+      background: var(--input-bg); border: 1px solid var(--border); border-radius: 12px;
+      padding: 18px 16px; text-align: center;
+    }
+    .buy-card .icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .buy-card .num { font-size: 1.35rem; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+    .buy-card .desc { font-size: 0.85rem; color: var(--muted); }
+    .note { font-size: 0.85rem; color: var(--muted); margin-top: 18px; font-style: italic; }
+    .question {
+      background: var(--input-bg); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px; margin-bottom: 16px;
+    }
+    .question h3 { font-size: 1.05rem; margin-bottom: 14px; color: var(--text); }
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option {
+      display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+      background: var(--card); border: 1px solid var(--border); border-radius: 8px; cursor: pointer;
+    }
+    .option:hover { border-color: var(--accent); }
+    .option.selected { border-color: var(--accent); background: rgba(56, 189, 248, 0.1); }
+    .option.correct { border-color: var(--success); background: rgba(74, 222, 128, 0.12); }
+    .option.wrong { border-color: var(--danger); background: rgba(248, 113, 113, 0.12); }
+    .option input { display: none; }
+    button.main-btn {
+      background: linear-gradient(135deg, var(--accent), #818cf8); color: #fff;
+      border: none; padding: 14px 28px; border-radius: 10px; font-size: 1rem;
+      font-weight: 600; cursor: pointer;
+    }
+    #quiz-result {
+      margin-top: 22px; padding: 18px; border-radius: 12px; text-align: center;
+      font-size: 1.15rem; font-weight: 600; display: none;
+    }
+    footer { text-align: center; color: var(--muted); font-size: 0.9rem; margin-top: 30px; padding-bottom: 30px; }
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.75rem; }
+      section { padding: 22px; }
+      .result-box .value { font-size: 1.65rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <button type="button" class="theme-toggle" id="themeToggle" title="Сменить тему">🌙</button>
+      <h1>Теневая экономика</h1>
+      <p>Интерактивный калькулятор для индивидуального проекта 10 класса</p>
+    </header>
+
+    <section>
+      <h2>Что такое теневая экономика?</h2>
+      <p><strong>Теневая экономика</strong> — это часть экономики, которая скрывается от государства. В неё входят доходы и деятельность, которые не отражаются в официальной статистике и с которых не платятся налоги.</p>
+      <p>К теневой экономике относят:</p>
+      <ul>
+        <li>работу «в чёрную» (без трудового договора и налогов);</li>
+        <li>продажу товаров и услуг без кассовых чеков;</li>
+        <li>уклонение от уплаты налогов;</li>
+        <li>неофициальный бизнес;</li>
+        <li>некоторые виды запрещённой деятельности.</li>
+      </ul>
+      <div class="warning">
+        <strong>Почему это плохо?</strong><br>
+        Когда люди и компании не платят налоги, в бюджете города и страны становится меньше денег. Из-за этого государство хуже может строить школы, больницы, дороги, парки и поддерживать общественный транспорт. Честные налогоплательщики фактически оплачивают и себя, и тех, кто уходит от налогов.
+      </div>
+      <div class="highlight">
+        По разным оценкам, доля теневой экономики в России может составлять от 15% до 40% ВВП в зависимости от региона и методики подсчёта.
+      </div>
+    </section>
+
+    <section>
+      <h2>Калькулятор теневой экономики</h2>
+      <p style="margin-bottom: 22px; color: var(--muted);">Выбери город — автоматически подставится его приблизительный годовой бюджет. Затем укажи предполагаемую долю теневого сектора.</p>
+
+      <div class="calc-grid">
+        <div class="form-group">
+          <label for="city">Город</label>
+          <select id="city"><option value="">— Выберите город —</option></select>
+        </div>
+        <div class="form-group">
+          <label for="budget">Годовой бюджет города (млрд ₽)</label>
+          <input type="number" id="budget" step="0.1" min="0" placeholder="Выберите город или введите вручную">
+        </div>
+        <div class="form-group">
+          <label>Предполагаемая доля теневого сектора</label>
+          <div class="slider-container">
+            <input type="range" id="percent" min="5" max="50" value="25" step="1">
+            <span class="percent-value" id="percentValue">25%</span>
+          </div>
+        </div>
+        <div class="result-box">
+          <div class="label">Ориентировочный объём теневой экономики</div>
+          <div class="value" id="result">—</div>
+          <div class="sub" id="resultSub">Выберите город и долю теневого сектора</div>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <h3>Как меняется объём теневой экономики при разной доле</h3>
+        <canvas id="chart" height="220"></canvas>
+      </div>
+
+      <div style="margin-top: 28px;">
+        <h3 style="font-size: 1.05rem; color: var(--muted); margin-bottom: 6px;">На что примерно хватит этих денег</h3>
+        <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 4px;">Ориентировочный расчёт (очень приблизительный)</p>
+        <div class="buy-grid">
+          <div class="buy-card"><div class="icon">🏫</div><div class="num" id="buySchools">—</div><div class="desc">школ (постройка)</div></div>
+          <div class="buy-card"><div class="icon">🏥</div><div class="num" id="buyHospitals">—</div><div class="desc">поликлиник</div></div>
+          <div class="buy-card"><div class="icon">🛣️</div><div class="num" id="buyRoads">—</div><div class="desc">км дорог</div></div>
+          <div class="buy-card"><div class="icon">🚌</div><div class="num" id="buyBuses">—</div><div class="desc">автобусов</div></div>
+        </div>
+      </div>
+      <p class="note">* Бюджеты городов взяты приблизительно на основе открытых данных 2024–2025 годов. Это учебный инструмент.</p>
+    </section>
+
+    <section>
+      <h2>Проверь себя</h2>
+      <p style="margin-bottom: 22px; color: var(--muted);">Ответь на 5 вопросов. После ответа на все нажми «Проверить».</p>
+      <div id="quiz"></div>
+      <button type="button" class="main-btn" id="checkBtn" style="margin-top: 8px;">Проверить ответы</button>
+      <div id="quiz-result"></div>
+    </section>
+
+    <footer>
+      Индивидуальный проект по обществознанию / экономике · 10 класс<br>
+      Тема: Теневая экономика
+    </footer>
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    var cities = [
+      { name: "Еманжелинск", budget: 2.8 },
+      { name: "Москва", budget: 5500 },
+      { name: "Санкт-Петербург", budget: 1450 },
+      { name: "Новосибирск", budget: 102 },
+      { name: "Екатеринбург", budget: 98 },
+      { name: "Казань", budget: 62 },
+      { name: "Нижний Новгород", budget: 76 },
+      { name: "Челябинск", budget: 70 },
+      { name: "Красноярск", budget: 71 },
+      { name: "Самара", budget: 57 },
+      { name: "Уфа", budget: 50 },
+      { name: "Ростов-на-Дону", budget: 62 },
+      { name: "Омск", budget: 45 },
+      { name: "Краснодар", budget: 92 },
+      { name: "Воронеж", budget: 55 },
+      { name: "Пермь", budget: 61 },
+      { name: "Волгоград", budget: 46 },
+      { name: "Саратов", budget: 38 },
+      { name: "Тюмень", budget: 48 },
+      { name: "Тольятти", budget: 22 },
+      { name: "Ижевск", budget: 28 },
+      { name: "Барнаул", budget: 27 },
+      { name: "Ульяновск", budget: 24 },
+      { name: "Иркутск", budget: 32 },
+      { name: "Хабаровск", budget: 35 },
+      { name: "Ярославль", budget: 26 },
+      { name: "Владивосток", budget: 34 },
+      { name: "Махачкала", budget: 18 },
+      { name: "Томск", budget: 25 },
+      { name: "Оренбург", budget: 23 },
+      { name: "Кемерово", budget: 26 },
+      { name: "Новокузнецк", budget: 24 },
+      { name: "Рязань", budget: 22 },
+      { name: "Астрахань", budget: 20 },
+      { name: "Пенза", budget: 19 },
+      { name: "Липецк", budget: 21 },
+      { name: "Киров", budget: 18 },
+      { name: "Чебоксары", budget: 17 },
+      { name: "Калининград", budget: 28 },
+      { name: "Тула", budget: 23 },
+      { name: "Курск", budget: 18 },
+      { name: "Ставрополь", budget: 20 },
+      { name: "Улан-Удэ", budget: 16 },
+      { name: "Сочи", budget: 30 },
+      { name: "Тверь", budget: 19 },
+      { name: "Магнитогорск", budget: 17 },
+      { name: "Иваново", budget: 15 },
+      { name: "Брянск", budget: 16 },
+      { name: "Белгород", budget: 22 },
+      { name: "Сургут", budget: 38 },
+      { name: "Владимир", budget: 16 },
+      { name: "Нижний Тагил", budget: 15 },
+      { name: "Архангельск", budget: 17 },
+      { name: "Калуга", budget: 18 },
+      { name: "Чита", budget: 14 },
+      { name: "Смоленск", budget: 14 },
+      { name: "Волжский", budget: 12 },
+      { name: "Саранск", budget: 13 },
+      { name: "Курган", budget: 12 },
+      { name: "Череповец", budget: 16 },
+      { name: "Вологда", budget: 15 },
+      { name: "Орёл", budget: 13 },
+      { name: "Владикавказ", budget: 12 },
+      { name: "Подольск", budget: 14 },
+      { name: "Грозный", budget: 15 },
+      { name: "Мурманск", budget: 18 },
+      { name: "Тамбов", budget: 13 },
+      { name: "Петрозаводск", budget: 12 },
+      { name: "Кострома", budget: 11 },
+      { name: "Нижневартовск", budget: 20 },
+      { name: "Йошкар-Ола", budget: 11 },
+      { name: "Новороссийск", budget: 14 },
+      { name: "Таганрог", budget: 11 },
+      { name: "Комсомольск-на-Амуре", budget: 12 },
+      { name: "Сыктывкар", budget: 13 },
+      { name: "Нальчик", budget: 10 },
+      { name: "Дзержинск", budget: 10 },
+      { name: "Братск", budget: 11 },
+      { name: "Энгельс", budget: 10 },
+      { name: "Ангарск", budget: 10 },
+      { name: "Старый Оскол", budget: 12 },
+      { name: "Великий Новгород", budget: 11 },
+      { name: "Псков", budget: 10 },
+      { name: "Бийск", budget: 9 },
+      { name: "Прокопьевск", budget: 8 },
+      { name: "Рыбинск", budget: 9 },
+      { name: "Балашиха", budget: 13 },
+      { name: "Химки", budget: 12 },
+      { name: "Королёв", budget: 11 },
+      { name: "Мытищи", budget: 12 },
+      { name: "Люберцы", budget: 10 },
+      { name: "Электросталь", budget: 9 },
+      { name: "Коломна", budget: 8 },
+      { name: "Одинцово", budget: 11 },
+      { name: "Домодедово", budget: 10 },
+      { name: "Раменское", budget: 8 },
+      { name: "Жуковский", budget: 7 },
+      { name: "Серпухов", budget: 7 },
+      { name: "Щёлково", budget: 8 },
+      { name: "Орехово-Зуево", budget: 7 },
+      { name: "Ногинск", budget: 6 }
+    ];
+
+    var questions = [
+      { q: "1. Что такое теневая экономика?", options: ["Экономика стран, которые находятся в тени других государств", "Часть экономики, скрытая от государства и не облагаемая налогами", "Только криминальный бизнес", "Экономика в ночное время суток"], correct: 1 },
+      { q: "2. Почему теневая экономика вредна для города и страны?", options: ["Потому что она создаёт слишком много рабочих мест", "Потому что в бюджет поступает меньше налогов, и меньше денег на школы, больницы и дороги", "Потому что она делает товары дороже", "Потому что она запрещена только в России"], correct: 1 },
+      { q: "3. Что из перечисленного относится к теневой экономике?", options: ["Работа по официальному трудовому договору", "Покупка продуктов в магазине с чеком", "Получение зарплаты «в конверте» без уплаты налогов", "Оплата коммунальных услуг"], correct: 2 },
+      { q: "4. Как в калькуляторе считается ориентировочный объём теневой экономики?", options: ["Бюджет города делится на процент теневого сектора", "Бюджет города умножается на долю теневого сектора (в процентах)", "Берётся средний бюджет всех городов", "Это случайное число"], correct: 1 },
+      { q: "5. Что может помочь уменьшить теневую экономику?", options: ["Полностью запретить малый бизнес", "Сделать налоги настолько высокими, чтобы никто не мог их платить", "Упрощение налоговой системы, защита прав работников и контроль за соблюдением законов", "Отменить все налоги"], correct: 2 }
+    ];
+
+    var themeToggle = document.getElementById("themeToggle");
+    var citySelect = document.getElementById("city");
+    var budgetInput = document.getElementById("budget");
+    var percentSlider = document.getElementById("percent");
+    var percentValue = document.getElementById("percentValue");
+    var resultEl = document.getElementById("result");
+    var resultSub = document.getElementById("resultSub");
+    var quizContainer = document.getElementById("quiz");
+    var checkBtn = document.getElementById("checkBtn");
+    var canvas = document.getElementById("chart");
+    var ctx = canvas ? canvas.getContext("2d") : null;
+
+    function getSavedTheme() {
+      try { return localStorage.getItem("theme") || "dark"; } catch (e) { return "dark"; }
+    }
+    function setTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      if (themeToggle) themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+      try { localStorage.setItem("theme", theme); } catch (e) {}
+      drawChart();
+    }
+    setTheme(getSavedTheme());
+    if (themeToggle) {
+      themeToggle.onclick = function () {
+        var current = document.documentElement.getAttribute("data-theme") || "dark";
+        setTheme(current === "dark" ? "light" : "dark");
+      };
+    }
+
+    var other = cities.slice(1).sort(function (a, b) { return a.name.localeCompare(b.name, "ru"); });
+    var sorted = [cities[0]].concat(other);
+    for (var i = 0; i < sorted.length; i++) {
+      var opt = document.createElement("option");
+      opt.value = String(sorted[i].budget);
+      opt.textContent = sorted[i].name;
+      citySelect.appendChild(opt);
+    }
+
+    citySelect.onchange = function () {
+      if (citySelect.value) { budgetInput.value = citySelect.value; calculate(); }
+    };
+    budgetInput.oninput = calculate;
+    percentSlider.oninput = function () {
+      percentValue.textContent = percentSlider.value + "%";
+      calculate();
+    };
+
+    function calculate() {
+      var budget = parseFloat(budgetInput.value);
+      var percent = parseFloat(percentSlider.value);
+      if (!budget || budget <= 0) {
+        resultEl.textContent = "—";
+        resultSub.textContent = "Выберите город и долю теневого сектора";
+        updateBuy(0);
+        drawChart();
+        return;
+      }
+      var shadow = budget * (percent / 100);
+      resultEl.textContent = shadow.toLocaleString("ru-RU", { maximumFractionDigits: 1 }) + " млрд ₽";
+      var comparison = "";
+      if (shadow > 100) comparison = "Это примерно как бюджет нескольких крупных городов вместе.";
+      else if (shadow > 20) comparison = "На эти деньги можно было бы построить десятки школ или больниц.";
+      else if (shadow > 5) comparison = "Этого хватило бы на серьёзное развитие инфраструктуры города.";
+      else comparison = "Даже эта сумма могла бы заметно улучшить жизнь жителей.";
+      resultSub.textContent = comparison;
+      updateBuy(shadow);
+      drawChart();
+    }
+
+    function updateBuy(shadowBillion) {
+      function fmt(n) {
+        if (n <= 0) return "—";
+        if (n >= 1) return Math.floor(n).toLocaleString("ru-RU");
+        return n.toFixed(1);
+      }
+      document.getElementById("buySchools").textContent = fmt(shadowBillion / 1.0);
+      document.getElementById("buyHospitals").textContent = fmt(shadowBillion / 0.4);
+      document.getElementById("buyRoads").textContent = fmt(shadowBillion / 0.08);
+      var buses = shadowBillion / 0.015;
+      document.getElementById("buyBuses").textContent = buses >= 1 ? Math.floor(buses).toLocaleString("ru-RU") : (buses > 0 ? String(Math.round(buses)) : "—");
+    }
+
+    function drawChart() {
+      if (!canvas || !ctx) return;
+      var budget = parseFloat(budgetInput.value) || 0;
+      var currentPercent = parseFloat(percentSlider.value);
+      var dpr = window.devicePixelRatio || 1;
+      var rect = canvas.getBoundingClientRect();
+      if (rect.width < 10) return;
+      canvas.width = rect.width * dpr;
+      canvas.height = 220 * dpr;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+      var width = rect.width, height = 220;
+      var pad = { top: 20, right: 20, bottom: 40, left: 55 };
+      var chartW = width - pad.left - pad.right;
+      var chartH = height - pad.top - pad.bottom;
+      var percents = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+      var values = percents.map(function (p) { return budget * (p / 100); });
+      var maxVal = Math.max.apply(null, values.concat([1]));
+      var isDark = document.documentElement.getAttribute("data-theme") !== "light";
+      var gridColor = isDark ? "#334155" : "#cbd5e1";
+      var textColor = isDark ? "#94a3b8" : "#64748b";
+      var lineColor = isDark ? "#38bdf8" : "#0284c7";
+      var fillColor = isDark ? "rgba(56, 189, 248, 0.15)" : "rgba(2, 132, 199, 0.12)";
+      var activeColor = isDark ? "#f97316" : "#ea580c";
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = gridColor; ctx.lineWidth = 1;
+      ctx.font = "12px system-ui, sans-serif"; ctx.fillStyle = textColor; ctx.textAlign = "right";
+      for (var i = 0; i <= 4; i++) {
+        var y = pad.top + (chartH / 4) * i;
+        ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(width - pad.right, y); ctx.stroke();
+        var val = maxVal * (1 - i / 4);
+        ctx.fillText(val >= 10 ? String(Math.round(val)) : val.toFixed(1), pad.left - 8, y + 4);
+      }
+      ctx.textAlign = "center";
+      for (var j = 0; j < percents.length; j++) {
+        var x = pad.left + (chartW / (percents.length - 1)) * j;
+        ctx.fillText(percents[j] + "%", x, height - 12);
+      }
+      if (budget <= 0) {
+        ctx.fillStyle = textColor; ctx.font = "14px system-ui, sans-serif";
+        ctx.fillText("Выберите город, чтобы увидеть график", width / 2, height / 2);
+        return;
+      }
+      ctx.beginPath();
+      for (var k = 0; k < values.length; k++) {
+        var xx = pad.left + (chartW / (percents.length - 1)) * k;
+        var yy = pad.top + chartH - (values[k] / maxVal) * chartH;
+        if (k === 0) ctx.moveTo(xx, yy); else ctx.lineTo(xx, yy);
+      }
+      ctx.lineTo(pad.left + chartW, pad.top + chartH); ctx.lineTo(pad.left, pad.top + chartH);
+      ctx.closePath(); ctx.fillStyle = fillColor; ctx.fill();
+      ctx.beginPath();
+      for (var m = 0; m < values.length; m++) {
+        var x2 = pad.left + (chartW / (percents.length - 1)) * m;
+        var y2 = pad.top + chartH - (values[m] / maxVal) * chartH;
+        if (m === 0) ctx.moveTo(x2, y2); else ctx.lineTo(x2, y2);
+      }
+      ctx.strokeStyle = lineColor; ctx.lineWidth = 2.5; ctx.stroke();
+      for (var n = 0; n < values.length; n++) {
+        var x3 = pad.left + (chartW / (percents.length - 1)) * n;
+        var y3 = pad.top + chartH - (values[n] / maxVal) * chartH;
+        var isActive = percents[n] === currentPercent;
+        ctx.beginPath(); ctx.arc(x3, y3, isActive ? 6 : 4, 0, Math.PI * 2);
+        ctx.fillStyle = isActive ? activeColor : lineColor; ctx.fill();
+        if (isActive) { ctx.strokeStyle = isDark ? "#0f172a" : "#ffffff"; ctx.lineWidth = 2; ctx.stroke(); }
+      }
+    }
+    window.addEventListener("resize", drawChart);
+    drawChart();
+
+    for (var qi = 0; qi < questions.length; qi++) {
+      (function (item, qIndex) {
+        var div = document.createElement("div");
+        div.className = "question";
+        var h3 = document.createElement("h3");
+        h3.textContent = item.q;
+        div.appendChild(h3);
+        var optionsDiv = document.createElement("div");
+        optionsDiv.className = "options";
+        optionsDiv.id = "q" + qIndex;
+        for (var oi = 0; oi < item.options.length; oi++) {
+          (function (opt, oIndex) {
+            var label = document.createElement("label");
+            label.className = "option";
+            var input = document.createElement("input");
+            input.type = "radio"; input.name = "q" + qIndex; input.value = String(oIndex);
+            var span = document.createElement("span");
+            span.textContent = opt;
+            label.appendChild(input); label.appendChild(span);
+            label.onclick = function () {
+              var all = optionsDiv.querySelectorAll(".option");
+              for (var t = 0; t < all.length; t++) all[t].classList.remove("selected");
+              label.classList.add("selected");
+            };
+            optionsDiv.appendChild(label);
+          })(item.options[oi], oi);
+        }
+        div.appendChild(optionsDiv);
+        quizContainer.appendChild(div);
+      })(questions[qi], qi);
+    }
+
+    checkBtn.onclick = function () {
+      var score = 0, answered = 0;
+      for (var qIndex = 0; qIndex < questions.length; qIndex++) {
+        var item = questions[qIndex];
+        var selected = document.querySelector('input[name="q' + qIndex + '"]:checked');
+        var options = document.querySelectorAll("#q" + qIndex + " .option");
+        for (var i = 0; i < options.length; i++) options[i].classList.remove("correct", "wrong");
+        if (selected) {
+          answered++;
+          var selectedIndex = parseInt(selected.value, 10);
+          if (selectedIndex === item.correct) { score++; options[selectedIndex].classList.add("correct"); }
+          else { options[selectedIndex].classList.add("wrong"); options[item.correct].classList.add("correct"); }
+        }
+      }
+      var resultBox = document.getElementById("quiz-result");
+      resultBox.style.display = "block";
+      if (answered < questions.length) {
+        resultBox.style.background = "rgba(249, 115, 22, 0.12)";
+        resultBox.style.color = "var(--accent2)";
+        resultBox.textContent = "Ответь на все вопросы! Сейчас отвечено: " + answered + " из " + questions.length;
+        return;
+      }
+      if (score === 5) {
+        resultBox.style.background = "rgba(74, 222, 128, 0.12)";
+        resultBox.style.color = "var(--success)";
+        resultBox.textContent = "Отлично! " + score + " из 5. Ты хорошо разобрался в теме!";
+      } else if (score >= 3) {
+        resultBox.style.background = "rgba(56, 189, 248, 0.12)";
+        resultBox.style.color = "var(--accent)";
+        resultBox.textContent = "Хорошо! " + score + " из 5. Есть над чем подумать, но основа понятна.";
+      } else {
+        resultBox.style.background = "rgba(248, 113, 113, 0.12)";
+        resultBox.style.color = "var(--danger)";
+        resultBox.textContent = score + " из 5. Перечитай теорию в начале страницы и попробуй ещё раз.";
+      }
+    };
+  })();
+  </script>
+</body>
+</html>
